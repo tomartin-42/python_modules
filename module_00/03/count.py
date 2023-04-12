@@ -1,14 +1,23 @@
 import sys
 import string
 
-def count_analizer(text):
+def text_analizer(*text):
+    """
+    This function counts the number of upper characters, lower characters,
+    punctuation and spaces in a given text
+    """
 
-    U = 0
-    L = 0
-    S = 0
-    C = 0
+    if len(text) == 0 or text[0] == None:
+        print("What is the text to analyze?")
+        return
 
-    for i in text:
+    if not isinstance(text[0], str):
+        print("Asertion error: the input is not a string")
+        return
+    
+    U = L = S = C = T = 0
+
+    for i in text[0]:
         if i.isupper():
             U += 1
         if i.islower():
@@ -17,8 +26,21 @@ def count_analizer(text):
             C += 1
         if i == ' ':
             S += 1
+        T += 1
 
-    print("Upper= ", U)
-    print("Lower= ", L)
-    print("Spaces= ", S)
-    print("Special= ", C)
+    print(f"The text contains {T} character(s):")
+    print(f"- {U} Upper")
+    print(f"- {L} Lower")
+    print(f"- {C} Puntuation")
+    print(f"- {S} Spaces")
+
+if __name__ == '__main__':
+    if len(sys.argv) > 2:
+        print("Error: only one argument is allowed")
+        exit()
+
+    if len(sys.argv) == 1:    
+        print("What is the text to analyze?")
+        exit()
+
+    text_analizer(sys.argv[1])

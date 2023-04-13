@@ -1,15 +1,21 @@
 import sys
 
-cookbook ={'sandwich' : [], 'cake' : [], 'salad' : []}
+cookbook ={'sandwich' : {}, 'cake' : {}, 'salad' : {}}
 
 def init_sandwich():
-    cookbook['sandwich'] = ['ham', 'bread', 'cheese', 'tomatoes', 'lunch', 10]
+    cookbook['sandwich'] = {'ingredients': ['ham', 'bread', 'cheese', 'tomatoes'],
+                            'meal': 'lunch',
+                             'prep_time': 10}
 
 def init_cake():
-    cookbook['cake'] = ['flour', 'sugar', 'eggs', 'dessert', 60]
+    cookbook['cake'] = {'ingredients': ['flour', 'sugar', 'eggs'],
+                        'meal': 'dessert',
+                         'prep_time': 60}
 
 def init_salad():
-    cookbook['salad'] = ['avocado', 'arugula', 'tomatoes', 'spinach', 'lunch', 15]
+    cookbook['salad'] = {'ingredients': ['avocado', 'arugula', 'tomatoes', 'spinach'],
+                         'meal': 'lunch',
+                          'prep_time': 15}
 
 def print_recipes():
     print("All recipes")
@@ -19,9 +25,10 @@ def print_recipes():
 def print_one_recipe(recipe):
     print("Recipe", recipe)
     data = cookbook[recipe]
-    print("Ingredient:", data[:-2])
-    print("Mealt type:", data[len(data)- 2])
-    print("Time:", data[len(data) - 1])
+    print("Ingredient:", data['ingredients'])
+    print("Mealt type:", data['meal'])
+    print("Time:", data['prep_time'])
+    print()
 
 def dell_one_recipe(recipe):
     if recipe in cookbook:
@@ -30,16 +37,32 @@ def dell_one_recipe(recipe):
 
 def add_recipe():
     print("New recipe")
-    recipe = input("Recipe name: ")
-    cookbook[recipe] = []
+    recipe_name = input("Recipe name: ")
+    if len(recipe_name) == 0:
+        print("Error: Empty name")
+        return
+    recipe = {'ingredients': [], 'meal': '', 'prep_time': 0}
     print("Add ingredient: (type 'End' to end)")
     for line in sys.stdin:
         if 'End' == line.rstrip():
             break
         else:
-            cookbook[recipe].append(line.rstrip())
-    cookbook[recipe].append(input('Mealt type: '))
-    cookbook[recipe].append(input('Time: '))
+            recipe['ingredients'].append(line.rstrip())
+    if recipe['ingredients'] == []:
+        print("Error: Empty ingredient")
+        return
+    recipe['meal'] = input('Mealt type: ')
+    if len(recipe['meal']) == 0:
+        print("Error: Empty meal type")
+        return
+    recipe['prep_time'] = input('Time: ')
+    if isinstance(recipe['prep_time'], int):
+        print("Error: Time must be an integer")
+        return
+    if int(recipe['prep_time']) < 0:
+        print("Error: Time must be positive")
+        return
+    cookbook[recipe_name] = recipe 
 
 def print_all_recipes():
     for r in cookbook:
@@ -50,6 +73,7 @@ if __name__ == '__main__':
     init_cake()
     init_salad()
     print_recipes()
+
+    add_recipe()
     for r in cookbook:
         print_one_recipe(r)
-    add_recipe()

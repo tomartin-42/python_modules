@@ -56,7 +56,7 @@ def add_recipe():
         print("Error: Empty meal type")
         return
     recipe['prep_time'] = input('Time: ')
-    if isinstance(recipe['prep_time'], int):
+    if not recipe['prep_time'].isdigit():
         print("Error: Time must be an integer")
         return
     if int(recipe['prep_time']) < 0:

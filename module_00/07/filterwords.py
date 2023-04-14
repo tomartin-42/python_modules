@@ -1,5 +1,4 @@
 import sys
-import argparse
 import string
 
 if len(sys.argv) != 3: # 1

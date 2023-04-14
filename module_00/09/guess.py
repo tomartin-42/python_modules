@@ -1,6 +1,6 @@
 import random
-import sys
 import argparse
+import signal
 
 msg_init = "This is an interactive guessing game!\nYou have to enter a number between 1 and 99 to find out the secret number.\nType 'exit' to end the game.\nGood luck!\n"
 
@@ -13,16 +13,30 @@ def init_guess():
     global num
     num = random.randint(0, 99)
 
+def handler(signum, frame):
+    if signum == signal.SIGINT:
+        print('Goodbye!')
+    exit(0)
+
 def game():
-    trys = 0
+    trys = 1
     while True:
         data = input("What's your guess between 1 and 99\n")
-        if data == 'exit':
+        if data == '':
+            pass
+        elif data == 'exit':
+            print('Goodbye!')
             break
         elif any(not i.isdigit() for i in data):
             print('That\'s not a numbre.')
         elif data == str(num):
-            print(f'You won in {trys} attempts!')
+            if trys == 1:
+                if num == 42:
+                    print("The answer to the ultimate question of life, the universe and everything is 42.")
+                print("Congratulations! You got it on your first try!")
+            else:
+                print("Congratulations, you've got it!")
+                print(f'You won in {trys} attempts!')
             break
         elif int(data) < num:
             print('Too low!')
@@ -32,5 +46,10 @@ def game():
             trys += 1
 
 if __name__ == '__main__':
+    signal.signal(signal.SIGINT, handler)
     init_guess()
-    game()
+    try:
+        game()
+    except EOFError:
+        print('Goodbye!')
+        exit(0)

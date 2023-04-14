@@ -1,5 +1,5 @@
 from datetime import datetime
-t = (3, 30, 2019, 9, 25)
+t = (2019, 9, 25, 3, 30)
 
-time = datetime(t[2], t[3], t[4], t[0], t[1])
+time = datetime(*t)
 print(time.strftime("%m/%d/%Y %H:%M"))

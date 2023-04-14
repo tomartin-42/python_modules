@@ -35,7 +35,7 @@ def print_one_recipe():
         print('Recipe not found !')
         
 
-def dell_one_recipe():
+def del_one_recipe():
     recipe = input('Del a recipe: ')
     if recipe in cookbook:
         del cookbook[recipe]

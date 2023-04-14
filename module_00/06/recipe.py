@@ -22,18 +22,47 @@ def print_recipes():
     for r in cookbook:
         print(r)
 
-def print_one_recipe(recipe):
-    print("Recipe", recipe)
-    data = cookbook[recipe]
-    print("Ingredient:", data['ingredients'])
-    print("Mealt type:", data['meal'])
-    print("Time:", data['prep_time'])
-    print()
+def print_one_recipe():
+    recipe = input('Insert recipe name: ')
+    if recipe in cookbook:
+        print("Recipe", recipe)
+        data = cookbook[recipe]
+        print("Ingredient:", data['ingredients'])
+        print("Mealt type:", data['meal'])
+        print("Time:", data['prep_time'])
+        print()
+    else
+        print('Recipe not found !')
+        
 
-def dell_one_recipe(recipe):
+def dell_one_recipe():
+    recipe = input('Del a recipe: ')
     if recipe in cookbook:
         del cookbook[recipe]
         print(recipe, "Delete");
+    else:
+        print('Recipe not found !')
+
+def main_loop():
+    while select != 5:
+        print('Welcome to the Python Cookbook !')
+        print('List of available option:')
+        print('\t1: Add a recipe')
+        print('\t2: Delete a recipe')
+        print('\t3: Print a recipe')
+        print('\t4: Print the cookbook')
+        print('\t5: Quit')
+        print()
+        print('Please select an option:')
+        select = input()
+
+        if select == 1:
+            add_recipe()
+        elif select == 2:
+            del_one_recipe()
+        elif select == 3:
+            print_one_recipe()
+
 
 def add_recipe():
     print("New recipe")
@@ -44,7 +73,7 @@ def add_recipe():
     recipe = {'ingredients': [], 'meal': '', 'prep_time': 0}
     print("Add ingredient: (type 'End' to end)")
     for line in sys.stdin:
-        if 'End' == line.rstrip():
+        if 'End' == line.rstrip() or line.rstrip() == '':
             break
         else:
             recipe['ingredients'].append(line.rstrip())

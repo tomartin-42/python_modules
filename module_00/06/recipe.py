@@ -31,7 +31,7 @@ def print_one_recipe():
         print("Mealt type:", data['meal'])
         print("Time:", data['prep_time'])
         print()
-    else
+    else:
         print('Recipe not found !')
         
 
@@ -44,6 +44,7 @@ def del_one_recipe():
         print('Recipe not found !')
 
 def main_loop():
+    select = 0
     while select != 5:
         print('Welcome to the Python Cookbook !')
         print('List of available option:')
@@ -55,13 +56,35 @@ def main_loop():
         print()
         print('Please select an option:')
         select = input()
-
+        if select == '':
+            select = 0
+        
+        select = int(select)
         if select == 1:
+            print()
             add_recipe()
+            print()
         elif select == 2:
+            print()
             del_one_recipe()
+            print()
         elif select == 3:
+            print()
             print_one_recipe()
+            print()
+        elif select == 4:
+            print()
+            print_all_recipes()
+            print()
+        elif select == 5:
+            print()
+            print('Cookbook closed. Goodbye !')
+            print()
+            exit(0)
+        else:
+            print()
+            print('Sorry, this option does not exist.')
+            print()
 
 
 def add_recipe():
@@ -101,8 +124,4 @@ if __name__ == '__main__':
     init_sandwich()
     init_cake()
     init_salad()
-    print_recipes()
-
-    add_recipe()
-    for r in cookbook:
-        print_one_recipe(r)
+    main_loop()

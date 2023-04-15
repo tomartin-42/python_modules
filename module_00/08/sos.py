@@ -12,5 +12,5 @@ res = ""
 for a in sys.argv[1:]:
     for l in a:
         res += morse.MORSE[l.upper()] + ' '
-    res += " / " 
+    res += "/ " 
 print(res[:-2])

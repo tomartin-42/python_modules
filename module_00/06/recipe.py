@@ -34,8 +34,8 @@ def print_one_recipe():
         print("Recipe", recipe)
         data = cookbook[recipe]
         print("Ingredient:", data['ingredients'])
-        print("Mealt type:", data['meal'])
-        print("Time:", data['prep_time'])
+        print(f"To be eaten for {data['meal']}.")
+        print(f"Takes {data['prep_time']} minutes of cooking.")
         print()
     else:
         print('Recipe not found !')

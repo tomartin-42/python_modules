@@ -1,6 +1,12 @@
 import sys
+import signal
 
 cookbook ={'sandwich' : {}, 'cake' : {}, 'salad' : {}}
+
+def handler(signum, frame):
+    if signum == signal.SIGINT:
+        print('Cookbook closed. Goodbye !')
+    exit(0)
 
 def init_sandwich():
     cookbook['sandwich'] = {'ingredients': ['ham', 'bread', 'cheese', 'tomatoes'],
@@ -124,4 +130,8 @@ if __name__ == '__main__':
     init_sandwich()
     init_cake()
     init_salad()
-    main_loop()
+    signal.signal(signal.SIGINT, handler)
+    try:
+        main_loop()
+    except:
+        pass

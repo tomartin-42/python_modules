@@ -1,19 +1,36 @@
 import sys
 import string
+import signal
 
-def text_analizer(*text):
+def headler(signum, frame):
+    if signum == signal.SIGINT:
+        print("KeyboardInterrupt")
+        exit(0)
+
+def text_analyzer(*text_a):
     """
     This function counts the number of upper characters, lower characters,
     punctuation and spaces in a given text
     """
+    text = list(text_a)
 
-    if len(text) == 0 or text[0] == None:
-        print("What is the text to analyze?")
-        return
+    signal.signal(signal.SIGINT, headler)
 
+    try:
+        if len(text) == 0:
+            print("What is the text to analyze?")
+            text.append(input())
+    except EOFError:
+        text.append("")
+
+    print(text)
     if not isinstance(text[0], str):
         print("Asertion error: the input is not a string")
         return
+    
+    if len(text) > 2:
+        print("Error: only one argument is allowed")
+        exit()
     
     U = L = S = C = T = 0
 
@@ -35,12 +52,5 @@ def text_analizer(*text):
     print(f"- {S} Spaces")
 
 if __name__ == '__main__':
-    if len(sys.argv) > 2:
-        print("Error: only one argument is allowed")
-        exit()
 
-    if len(sys.argv) == 1:    
-        print("What is the text to analyze?")
-        exit()
-
-    text_analizer(sys.argv[1])
+    text_analyzer(sys.argv[1])

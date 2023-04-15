@@ -1,24 +1,48 @@
-from time import sleep
+import time
 import sys
 
 def ft_progress(lst):
     for val in lst:
-        percent = int(100 * (val / len(lst)) + 1
-        partial = str(val + 1) + '/' + str(lst)  
-        leng = 20 * val // lst
-        bar = '=' * leng
-        bar += '>'
-        bar += ' ' * (20 - leng)  
-        resp = f'\rProgreso:| {bar}| {partial} '
-        print(resp, end = str(percent))
+        progress_b = "EAT: "
+
+        #init time
+        if lst.index(val) == 0:
+            start_time = time.time()
+
+        #calculate and print partial time
+        partial_time = time.time() - start_time
+        expect_time = partial_time  * (len(lst) / (lst.index(val) + 1))
+        progress_b += "{:.2f}s".format(expect_time) 
+
+        #percentage
+        progress_b += " ["
+        progress_b += str(int((lst.index(val)/len(lst) * 100) + 1)).rjust(3) + "%"
+        progress_b += "]"
+
+        #bar
+        progress_b += "["
+        lines = (lst.index(val) * 20 // len(lst))
+        for i in range(lines):
+            progress_b += "="
+        progress_b += ">"
+        for i in range(lines, 19):
+            progress_b += " "
+        progress_b += "] "
+
+        #remainder
+        progress_b += f"{lst.index(val) + 1}/{len(lst)}"
+        progress_b += " | "
+        progress_b += f"elapsed time: {(time.time() - start_time):.2f}s"
+        sys.stdout.write("\033[?25l")
+        print("\r", progress_b, end="")
         yield val
-    
-def launch(l = 2000):
-    for i in ft_progress(l):
-        sleep(0.002)
+    sys.stdout.write("\033[?25h")
 
 if __name__ == '__main__':
-    try:
-        launch(int(sys.argv[1]))
-    except:
-        launch()
+    listy = range(3333)
+    ret = 0
+    for elem in ft_progress(listy):
+        ret += elem
+        time.sleep(0.001)
+    print()
+    print(ret)

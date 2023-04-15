@@ -11,7 +11,7 @@ def ft_progress(lst):
 
         #calculate and print partial time
         partial_time = time.time() - start_time
-        expect_time = partial_time  * (len(lst) / (lst.index(val) + 1))
+        expect_time = partial_time  * (len(lst) / (lst.index(val) + 1) - 1)
         progress_b += "{:.2f}s".format(expect_time) 
 
         #percentage
@@ -39,10 +39,10 @@ def ft_progress(lst):
     sys.stdout.write("\033[?25h")
 
 if __name__ == '__main__':
-    listy = range(3333)
+    listy = range(333)
     ret = 0
     for elem in ft_progress(listy):
         ret += elem
-        time.sleep(0.001)
+        time.sleep(0.08)
     print()
     print(ret)

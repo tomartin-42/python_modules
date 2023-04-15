@@ -23,7 +23,6 @@ def text_analyzer(*text_a):
     except EOFError:
         text.append("")
 
-    print(text)
     if not isinstance(text[0], str):
         print("Asertion error: the input is not a string")
         return

@@ -1,5 +1,4 @@
 import sys
-import argparse
 
 def sum(num1, num2):
     print("Sum: " + "\t" + "\t", int(num1 + num2))
@@ -33,23 +32,28 @@ def mod(num1, num2):
         print("Remainder: " + "\t" + res)
 
 def other():
+    usage = 'Usage: python operations.py <number1> <number2>\nExample:\n\tpython operations.py 10 3'
+
+    try:
+        num1 = int(sys.argv[1])
+        num2 = int(sys.argv[2])
+    except ValueError:
+        print("AssertionError: only integers")
+        exit()
+
+    if len(sys.argv) == 1:
+        print(usage)
+        exit()
     if len(sys.argv) > 3:
-        raise AssertionError("too many arguments")
-    parser = argparse.ArgumentParser(usage='%(prog)s <number1> <number2>\nExample:\n\tpython operations.py 10 3' )
-    parser.add_argument('number1', type = int)
-    parser.add_argument('number2', type = int)
-    args = parser.parse_args()
-    # con vars(args) se imprime los argumentos que contiene args
-    print(vars(args))
-    sum(args.number1, args.number2)
-    res(args.number1, args.number2)
-    product(args.number1, args.number2)
-    quo(args.number1, args.number2)
-    mod(args.number1, args.number2)
+        print("AssertionError: too many arguments")
+        exit()
+
+    print(num1, num2)
+    sum(num1, num2)
+    res(num1, num2)
+    product(num1, num2)
+    quo(num1, num2)
+    mod(num1, num2)
 
 if __name__ == '__main__':
-    try:
-        other()
-    except AssertionError as err:
-        print('AssertionError:', err)
-        exit(1)
+    other()

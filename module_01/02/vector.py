@@ -1,14 +1,22 @@
+import copy
+
 class Vector:
     
     def __init__(self, *args):
         self.vector = []
         if len(args) == 1 and isinstance(args[0], int):
-            self.vector = [[float(i)] for i in range(args[0])]
+            self.vector = [float(i) for i in range(args[0])]
         elif len(args) == 2 and all(type(a) == int for a in args):
-            self.vector = [[float(i)] for i in range(args[0], args[1])]
+            self.vector = [float(i) for i in range(args[0], args[1])]
         else:
-            self.vector = list(args)
+            for i in args[0]:
+                if isinstance(i, list):
+                    self.vector.append(i)
+                else:
+                    self.vector.append([i])
+            pass
         self.shape = (len(self.vector), len(self.vector[0]))
+        print(self.shape)
 
     def dot(self, v2):
         if not isinstance(v2, Vector):
@@ -33,6 +41,37 @@ class Vector:
     def __repr__(self):
         return str("Vector(" + str(self.vector) + ")")
 
+    def __mul__(self, number):
+        aux = copy.deepcopy(self)
+        if aux.shape[0] == 1:
+            for i in range(len(aux.vector[0])):
+                aux.vector[0][i] *= number
+        else:
+            for i in range(len(aux.vector)):
+                for j in range(len(aux.vector[i])):
+                    aux.vector[i][j] *= number
+        return aux
+
+    def __truediv__(self, number):
+        try:
+            if number == 0:
+                raise ZeroDivisionError("division by zero")
+        except ZeroDivisionError as e:
+            print(e.__class__.__name__ + ':', e)
+            return
+        aux = copy.deepcopy(self)
+        if aux.shape[0] == 1:
+            for i in range(len(aux.vector[0])):
+                aux.vector[0][i] /= number
+        else:
+            for i in range(len(aux.vector)):
+                for j in range(len(aux.vector[i])):
+                    aux.vector[i][j] /= number
+        return aux
+
+    def __str__(self):
+        return str(self.vector)
+
 
 if __name__ == '__main__':
     a = Vector(2)
@@ -47,5 +86,10 @@ if __name__ == '__main__':
     print(c)
     """
   # print(b.dot(a))
-    print(a.T())
+  # print(a.T())
+  # print(e)
+    print(a)
+    print(b)
+    print(c)
+    print(d)
     print(e)

@@ -1,7 +1,10 @@
 import random
 
 def generator(text, sep=" ", option=None):
-    '''Option is an optional arg, sep is mandatory'''
+    """
+    Splits the text according to sep value and yield the substrings.
+    option precise if a action is performed to the substrings before it is yielded.
+    """
     if not isinstance(text, str) or not isinstance(sep, str) or len(sep) == 0:
         print("ERROR")
         exit(1)
@@ -39,7 +42,7 @@ if __name__ == '__main__':
     text = "Lorem Ipsum Lorem Ipsum"
     for word in generator(text, sep=" ", option="unique"):
         print(word)
-    text = "HOLA"
+    text = 10
     for word in generator(text, sep="" , option="unique"):
         print(word)
     

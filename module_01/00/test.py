@@ -14,4 +14,4 @@ if __name__ == '__main__':
     b.get_recipes_by_types("starter")
     print(w.__dict__)
     print()
-    print(str(w))
+    print(w)

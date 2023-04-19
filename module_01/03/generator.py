@@ -13,8 +13,9 @@ def generator(text, sep=" ", option=None):
         for e in lst:
             yield e 
     if option == 'shuffle':
-        random.shuffle(lst)
-        for e in lst:
+        while len(lst):
+            e = lst[random.randint(0, len(lst) - 1)]
+            lst.remove(e)
             yield e
     if option == 'ordered':
         o_l = sorted(lst)
